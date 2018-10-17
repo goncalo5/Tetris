@@ -14,7 +14,7 @@ GAME_NAME = "My Game"
 GAME_UNIT = 30
 
 # Screen
-WIDTH = 9
+WIDTH = 5
 HEIGHT = 10
 FPS = 60
 
@@ -58,7 +58,7 @@ def create_new_block(all_sprites, all_blocks):
     block = pg.sprite.Sprite()
     block.pos = vec((WIDTH / 2) * GAME_UNIT, 0)
     block.vel = vec(0, 0)
-    block.image = pg.Surface((GAME_UNIT, randint(1, 1) * GAME_UNIT))
+    block.image = pg.Surface((GAME_UNIT, randint(1, 4) * GAME_UNIT))
     block.image.fill(GREEN)
     block.rect = block.image.get_rect()
     block.rect.x = (WIDTH / 2) * GAME_UNIT
@@ -145,6 +145,8 @@ def run():
     all_sprites.add(wall_left)
     all_sprites.add(wall_right)
 
+    destroy1line = False
+
     cmd_key_down = False
 
     running = True
@@ -152,7 +154,9 @@ def run():
         clock.tick(FPS)
         now = pg.time.get_ticks()
         if block.stop:
+            print 'block.stop'
             block = create_new_block(all_sprites, all_blocks)
+        destroy1line = False
 
         block.vel = vec(0, 0)
 
@@ -212,9 +216,14 @@ def run():
                 if not check_rect_checker(i + 1):
                     break
             else:
-                print 'destroy 1 line'
-                for block in stoped_blocks:
-                    block.pos.y += GAME_UNIT
+                destroy1line = True
+                print 'destroy 1 line', all_blocks
+                for block in all_blocks:
+                    print block.rect
+                    # block.pos.y += GAME_UNIT
+                    block.rect.y += GAME_UNIT
+                    print block.rect
+                    print all_blocks, stoped_blocks
 
         block.rect.y -= 1
         # collstion with left:
@@ -236,7 +245,10 @@ def run():
             block.can_move_right = True
         block.rect.x -= 1
 
-        for block in all_blocks:
+        # for block in all_blocks:
+        #     block.rect.topleft = block.pos
+        if not destroy1line:
+            print 'not destroy1line'
             block.rect.topleft = block.pos
         ############################################################
         # Render (draw)
