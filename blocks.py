@@ -9,7 +9,6 @@ vec = pg.math.Vector2
 # Blocks:
 
 def create_new_block(all_sprites, all_blocks):
-    print 'create_new_block'
     block = pg.sprite.Sprite()
     block.pos = vec((SCREEN['WIDTH'] / 2) * GAME['UNIT'], 0)
     block.vel = vec(0, 0)

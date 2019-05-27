@@ -68,7 +68,7 @@ def run():
         clock.tick(SCREEN['FPS'])
         now = pg.time.get_ticks()
         if block.stop:
-            print 'block.stop'
+            print('block.stop')
             block = blocks.create_new_block(all_sprites, all_blocks)
         destroy1line = False
 
